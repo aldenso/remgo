@@ -1,0 +1,28 @@
+title = "Example of remgo Configuration"
+
+[servers]
+[servers.Internal]
+IPs = ["192.168.125.100", "aldoca.local", "127.0.0.1"]
+[servers.External]
+IPs = ["192.168.125.200", "192.168.125.60"]
+[servers.Mixed]
+IPs = ["192.168.125.100", "192.168.125.200", "aldoca.remote"]
+
+[tasks]
+[tasks.CheckHostname]
+role = "Internal"
+command = "hostname"
+
+[tasks.CheckDir]
+role = "External"
+command = "ls -l | tail -3"
+
+[tasks.WhoamIandIP]
+user = "root"
+role = "Mixed"
+command = "whoami; ip addr show"
+
+[tasks.WhoamIaldo]
+user = "aldo"
+role = "Mixed"
+command = "whoami"
