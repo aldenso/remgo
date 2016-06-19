@@ -5,10 +5,21 @@ import (
 	"os"
 	"os/user"
 
+	"flag"
+
 	"github.com/BurntSushi/toml"
 )
 
-var tomlfile = "remgo.toml"
+var (
+	tomlfile   = "remgo.toml"
+	template   bool
+	SSHTimeout int
+)
+
+func init() {
+	flag.BoolVar(&template, "template", false, "Create an example remgo.toml file")
+	flag.IntVar(&SSHTimeout, "timeout", 5, "Set ssh timeout in seconds.")
+}
 
 func ReadTomlFile(tomlfile string) (*Tomlconfig, error) {
 	var config *Tomlconfig
@@ -19,6 +30,10 @@ func ReadTomlFile(tomlfile string) (*Tomlconfig, error) {
 }
 
 func main() {
+	flag.Parse()
+	if template {
+		CreateTemplate()
+	}
 	Banner()
 	config, err := ReadTomlFile(tomlfile)
 	if err != nil {

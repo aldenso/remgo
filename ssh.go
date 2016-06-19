@@ -6,6 +6,7 @@ import (
 	"log"
 	"os/user"
 	"strconv"
+	"time"
 
 	"golang.org/x/crypto/ssh"
 )
@@ -37,6 +38,7 @@ func Dialer(I *Input) *Resp {
 			// Use the PublicKeys method for remote authentication.
 			ssh.PublicKeys(signer),
 		},
+		Timeout: time.Duration(SSHTimeout) * time.Second,
 	}
 	//Create dial
 	client, err := ssh.Dial("tcp", I.IP+":"+strconv.Itoa(I.Port), config)
