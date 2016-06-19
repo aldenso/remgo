@@ -1,18 +1,33 @@
-Remgo
+remgo
 =====
 
 Remote command execution for lazy people, using a small config file (toml) where you can define the remote hosts in roles and set tasks, indicating the server role, user if it's different from the running one and of course the command to run in the task.
 
+ConfigFile (remgo.toml):
+title = "string" **Optional**
+logdir = "string" **Optional**, if not present and log is set true in a Task, then the logs will be created in same dir where you run the script.
+
+[servers] **Required Just once**
+[servers.ServerGroupName] **Required**
+IPs = ["ipaddr", "hostname", "fqdn"] **Required**
+
+[tasks] **Required Just once**
+[tasks.SomeName] **Required**
+user = "root" **Optional**
+role = "ServerGroupName": **Required**
+command = "someShellCommand" **Required**
+log = true **Optional**
+
 Remember to set the ssh keys in your servers.
 
     $ ./remgo
-    ###################################
-    ###################################
-    #.----.-----.--------.-----.-----.#
-    #|   _|  -__|        |  _  |  _  |#
-    #|__| |_____|__|__|__|___  |_____|#
-    #####################|_____|#######
-    ###################################
+    #####################################
+    #####################################
+    ##.----.-----.--------.-----.-----.##
+    ##|   _|  -__|        |  _  |  _  |##
+    ##|__| |_____|__|__|__|___  |_____|##
+    ######################|_____|########
+    #####################################
 
     Running Example of remgo Configuration
     ###############################################################

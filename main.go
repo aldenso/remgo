@@ -45,22 +45,30 @@ func main() {
 			if k == taskval.Role {
 				fmt.Printf("Servers Role: %s\n", k)
 				Lines2()
-				for _, i := range v.IPs {
+				for _, ip := range v.IPs {
 					Lines2()
-					fmt.Printf("IP: %s\n", i)
+					fmt.Printf("IP: %s\n", ip)
 					Lines2()
 					output := &Resp{}
 					input := &Input{
 						taskval.Command,
-						i,
+						ip,
 						22,
 						username,
 					}
 					output = Dialer(input)
 					if output.Error != nil {
 						fmt.Printf("--- FAILED ---\n%v\n", output.Error)
+						if taskval.Log {
+							filename := taskKey + "_" + ip
+							NewLog(config.LogDir, filename, "err", []byte(output.Error.Error()))
+						}
 					} else {
 						fmt.Printf("+++ SUCCESS +++\n%s\n", string(output.Output))
+						if taskval.Log {
+							filename := taskKey + "_" + ip
+							NewLog(config.LogDir, filename, "log", output.Output)
+						}
 					}
 				}
 			}

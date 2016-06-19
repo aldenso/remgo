@@ -1,4 +1,5 @@
 title = "Example of remgo Configuration"
+logdir = "/tmp/logs"
 
 [servers]
 [servers.Internal]
@@ -12,6 +13,7 @@ IPs = ["192.168.125.100", "192.168.125.200", "aldoca.remote"]
 [tasks.CheckHostname]
 role = "Internal"
 command = "hostname"
+log = true
 
 [tasks.CheckDir]
 role = "External"
@@ -21,6 +23,7 @@ command = "ls -l | tail -3"
 user = "root"
 role = "Mixed"
 command = "whoami; ip addr show"
+log = true
 
 [tasks.WhoamIaldo]
 user = "aldo"
