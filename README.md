@@ -38,6 +38,10 @@ Usage of ./remgo:
         Set ssh timeout in seconds. (default 5)
 ```
 
+```
+$ ./remgo/remgo -template
+remgo.toml created.
+```
 
     $ ./remgo
     #####################################

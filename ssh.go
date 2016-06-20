@@ -13,6 +13,7 @@ import (
 
 var usr string
 
+// Dialer function to create ssh connection.
 func Dialer(I *Input) *Resp {
 	usr, err := user.Current()
 	output := &Resp{}

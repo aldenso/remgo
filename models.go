@@ -5,6 +5,7 @@ import (
 	"os"
 )
 
+// Tomlconfig struct to read toml file components.
 type Tomlconfig struct {
 	Title   string
 	LogDir  string
@@ -12,10 +13,13 @@ type Tomlconfig struct {
 	Tasks   map[string]Task
 }
 
+// Server struct to list a group of servers IPs, names or FDQN.
 type Server struct {
 	IPs []string
 }
 
+// Task struct to read command, role, user (optional) and set a log (optional)
+// for stdout or stderr
 type Task struct {
 	Command string
 	Role    string
@@ -23,11 +27,13 @@ type Task struct {
 	Log     bool
 }
 
+// Resp struct to return stdout and stderr from ssh connection.
 type Resp struct {
 	Output []byte
 	Error  error
 }
 
+// Input struct to set ssh connection parameters.
 type Input struct {
 	Command string
 	IP      string
@@ -35,14 +41,17 @@ type Input struct {
 	User    string
 }
 
+// Lines1 just a # line to separate the CLI output and make it more readable.
 func Lines1() {
 	fmt.Println("###############################################################")
 }
 
+// Lines2 just a = line to separate the CLI output and make it more readable.
 func Lines2() {
 	fmt.Println("===============================================================")
 }
 
+// Banner a nice banner to be displayed when you run de remgo program.
 func Banner() {
 	banner :=
 		`
@@ -57,6 +66,7 @@ func Banner() {
 	fmt.Println(banner)
 }
 
+// CreateTemplate fucntion to create a base remgo.toml file
 func CreateTemplate() {
 	template := `title = "Example of remgo Configuration"
 logdir = "/tmp/logs"
@@ -101,5 +111,6 @@ log = true
 		fmt.Println("remgo.toml already exist.")
 		os.Exit(1)
 	}
+	fmt.Println("remgo.toml created.")
 	os.Exit(0)
 }

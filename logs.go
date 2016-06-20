@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+// NewLog to create a log file for stdout or stderr
 func NewLog(logdir string, filename string, extension string, message []byte) {
 	if logdir != "" {
 		if _, err := os.Stat(logdir); err != nil {
