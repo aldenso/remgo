@@ -14,6 +14,11 @@ IPs = ["192.168.125.100", "192.168.125.200", "aldoca.remote"]
 role = "Internal"
 command = "hostname"
 log = true
+sftp = [
+# origin, destiny, action(PUT or GET), don't put spaces after commas
+"/tmp/file1.txt,/tmp/file1_put.txt,PUT",
+"/tmp/file2.txt,/tmp/file2_get.txt,GET"
+]
 
 [tasks.CheckDir]
 role = "External"

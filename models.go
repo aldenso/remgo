@@ -19,9 +19,10 @@ type Server struct {
 }
 
 // Task struct to read command, role, user (optional) and set a log (optional)
-// for stdout or stderr
+// for stdout or stderr.
 type Task struct {
 	Command string
+	SFTP    []string
 	Role    string
 	User    string
 	Log     bool
@@ -36,6 +37,7 @@ type Resp struct {
 // Input struct to set ssh connection parameters.
 type Input struct {
 	Command string
+	SFTP    []string
 	IP      string
 	Port    int
 	User    string
@@ -82,6 +84,11 @@ IPs = ["192.168.50.100", "server1.github.com"]
 role = "Internal"
 command = "hostname"
 log = true
+sftp = [
+# origin, destiny, action(PUT or GET), don't put spaces after commas
+"/tmp/file1.txt,/tmp/file1_put.txt,PUT",
+"/tmp/file2.txt,/tmp/file2_get.txt,GET"
+]
 
 [tasks.CheckDir]
 role = "External"

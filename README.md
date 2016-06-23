@@ -19,9 +19,14 @@ user = "Username"
 role = "ServerGroupName"
 command = "SomeShellCommand"
 log = true
+sftp = [
+# origin, destiny, action(PUT or GET), don't put spaces after commas
+"/tmp/file1.txt,/tmp/file1_put.txt,PUT",
+"/tmp/file2.txt,/tmp/file2_get.txt,GET"
+]
 ```
 
-logdir, user and log are optionals.
+logdir, user, sftp and log are optionals.
 
 if logs is set to true in a task but logdir is not set, then the logs will be generated in the same dir where you are running the app.
 
@@ -160,17 +165,35 @@ remgo.toml created.
     ===============================================================
     IP: 192.168.125.100
     ===============================================================
+    ###############################################################
+    SFTP: /tmp/file1.txt,/tmp/file1_put.txt,PUT SUCCESS
+    ###############################################################
+    ###############################################################
+    SFTP: /tmp/file2.txt,/tmp/file2_get.txt,GET SUCCESS
+    ###############################################################
     +++ SUCCESS +++
     test.example.local
 
     ===============================================================
     IP: aldoca.local
     ===============================================================
+    ###############################################################
+    SFTP: /tmp/file1.txt,/tmp/file1_put.txt,PUT SUCCESS
+    ###############################################################
+    ###############################################################
+    SFTP: /tmp/file2.txt,/tmp/file2_get.txt,GET SUCCESS
+    ###############################################################
     +++ SUCCESS +++
     aldoca.local
 
     ===============================================================
     IP: 127.0.0.1
     ===============================================================
+    ###############################################################
+    SFTP: /tmp/file1.txt,/tmp/file1_put.txt,PUT SUCCESS
+    ###############################################################
+    ###############################################################
+    SFTP: /tmp/file2.txt,/tmp/file2_get.txt,GET SUCCESS
+    ###############################################################
     +++ SUCCESS +++
     test.example.local

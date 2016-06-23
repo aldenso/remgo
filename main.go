@@ -74,6 +74,7 @@ func main() {
 						output := &Resp{}
 						input := &Input{
 							taskval.Command,
+							taskval.SFTP,
 							ip,
 							22,
 							username,
