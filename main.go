@@ -12,16 +12,17 @@ import (
 )
 
 var (
-	tomlfile = "remgo.toml"
 	template bool
+	tomlfile string
 	// SSHTimeout is passed to ssh conf to avoid a hang connection from not
 	// responding servers.
 	SSHTimeout int
 )
 
 func init() {
-	flag.BoolVar(&template, "template", false, "Create an example remgo.toml file")
+	flag.BoolVar(&template, "template", false, "Create an example remgo.toml file.")
 	flag.IntVar(&SSHTimeout, "timeout", 5, "Set ssh timeout in seconds.")
+	flag.StringVar(&tomlfile, "t", "remgo.toml", "Specify a config file.")
 }
 
 func readTomlFile(tomlfile string) (*Tomlconfig, error) {
