@@ -32,13 +32,17 @@ if logs is set to true in a task but logdir is not set, then the logs will be ge
 
 Remember to set the ssh keys in your servers.
 
+**Note**: Every task is independent, when iterating over maps with range in Go, the iteration order is not guaranteed, so don't expect to get an output in the same order as the tasks in the toml file, and make sure you don't set related commands in different task, instead set a related commands in the same task (ex: command = "CLIENT=$(echo $SSH_CLIENT | awk '{print $1}'); echo 'client is: '$CLIENT").
+
 Usage:
 
 ```
 $ ./remgo -h
 Usage of ./remgo:
+  -t string
+        Specify a config file. (default "remgo.toml")
   -template
-        Create an example remgo.toml file
+        Create an example remgo.toml file.
   -timeout int
         Set ssh timeout in seconds. (default 5)
 ```
