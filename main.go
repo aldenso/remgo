@@ -85,7 +85,9 @@ func main() {
 							fmt.Printf("--- FAILED ---\n%s\n%s\n", output.Error, string(output.Output))
 							if taskval.Log {
 								filename := taskKey + "_" + ip
-								NewLog(config.LogDir, filename, "err", []byte(output.Error.Error()))
+								msg := fmt.Sprintf("%s%s", output.Output, output.Error)
+								NewLog(config.LogDir, filename, "err", []byte(msg))
+								//NewLog(config.LogDir, filename, "err", []byte(output.Error.Error()))
 							}
 						} else {
 							fmt.Printf("+++ SUCCESS +++\n%s\n", string(output.Output))
