@@ -24,7 +24,7 @@ func Dialer(I *Input) *Resp {
 	keyfile := (usr.HomeDir + "/.ssh/id_rsa")
 	key, err := ioutil.ReadFile(keyfile)
 	if err != nil {
-		log.Printf("unable to read private key: %v", err)
+		log.Printf("unable to read private key: %v\n", err)
 		output.Error = err
 		return output
 	}
@@ -32,7 +32,7 @@ func Dialer(I *Input) *Resp {
 	// Create the Signer for this private key.
 	signer, err := ssh.ParsePrivateKey(key)
 	if err != nil {
-		log.Printf("unable to parse private key: %v", err)
+		log.Printf("unable to parse private key: %v\n", err)
 		output.Error = err
 		return output
 	}
@@ -56,7 +56,7 @@ func Dialer(I *Input) *Resp {
 
 	session, err := client.NewSession()
 	if err != nil {
-		fmt.Printf("Failed to create session: " + err.Error())
+		fmt.Printf("Failed to create session: %s\n", err.Error())
 		output.Error = err
 		return output
 	}
@@ -116,15 +116,9 @@ func Dialer(I *Input) *Resp {
 		}
 	}
 
-	//var b bytes.Buffer
-	//session.Stdout = &b
 	var stdout []byte
-	if stdout, err = session.CombinedOutput(I.Command); err != nil {
-		fmt.Printf("Failed to run: " + err.Error())
-	}
-	//fmt.Println(b.String())
+	stdout, err = session.CombinedOutput(I.Command)
 	output.Output = stdout
-	output.Error = nil
+	output.Error = err
 	return output
-
 }

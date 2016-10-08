@@ -82,7 +82,7 @@ func main() {
 						}
 						output = Dialer(input)
 						if output.Error != nil {
-							fmt.Printf("--- FAILED ---\n%v\n", output.Error)
+							fmt.Printf("--- FAILED ---\n%s\n%s\n", output.Error, string(output.Output))
 							if taskval.Log {
 								filename := taskKey + "_" + ip
 								NewLog(config.LogDir, filename, "err", []byte(output.Error.Error()))

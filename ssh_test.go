@@ -8,12 +8,12 @@ import (
 // this test assumes you can login to localhost with root
 func TestDialer(t *testing.T) {
 	sshconfig := &Input{
-		Command: "echo $HOME",
+		Command: "whoami",
 		IP:      "127.0.0.1",
 		Port:    22,
 		User:    "root",
 	}
-	outexpected := "/root"
+	outexpected := "root"
 	outresponse := &Resp{}
 	outresponse = Dialer(sshconfig)
 	if outresponse.Error != nil {
