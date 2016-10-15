@@ -23,4 +23,14 @@ func TestDialer(t *testing.T) {
 	if stringoutput != outexpected {
 		t.Errorf("Text mismatch, expected '%s', got '%s'.", outexpected, stringoutput)
 	}
+	sshconfig = &Input{
+		Command: "whoami",
+		IP:      "127.0.0.1",
+		Port:    8888,
+		User:    "root",
+	}
+	outresponse = Dialer(sshconfig)
+	if outresponse.Error == nil {
+		t.Errorf("error got 'nil' value for expected error")
+	}
 }
