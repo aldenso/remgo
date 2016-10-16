@@ -9,6 +9,7 @@ import (
 	"flag"
 
 	"github.com/BurntSushi/toml"
+	"github.com/aldenso/remgo/remgofs"
 )
 
 var (
@@ -17,6 +18,8 @@ var (
 	// SSHTimeout is passed to ssh conf to avoid a hang connection from not
 	// responding servers.
 	SSHTimeout int
+	// Fs afero fs to help later with testing
+	Fs = remgofs.InitOSFs()
 )
 
 func init() {
@@ -36,7 +39,13 @@ func readTomlFile(tomlfile string) (*Tomlconfig, error) {
 func main() {
 	flag.Parse()
 	if template {
-		CreateTemplate()
+		msg, err := CreateTemplate(Fs)
+		if err != nil {
+			fmt.Printf("Error creating tomfile: %v", err)
+		} else {
+			fmt.Println(msg)
+			os.Exit(0)
+		}
 	}
 	Banner()
 	config, err := readTomlFile(tomlfile)
@@ -80,7 +89,7 @@ func main() {
 							22,
 							username,
 						}
-						output = Dialer(input)
+						output = Dialer(Fs, input)
 						if output.Error != nil {
 							fmt.Printf("--- FAILED ---\n%s\n%s\n", output.Error, string(output.Output))
 							if taskval.Log {

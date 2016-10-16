@@ -5,20 +5,18 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
-	"os"
 	"os/user"
 	"strconv"
 	"strings"
 	"time"
 
 	"github.com/pkg/sftp"
+	"github.com/spf13/afero"
 	"golang.org/x/crypto/ssh"
 )
 
-var usr string
-
 // Dialer function to create ssh connection.
-func Dialer(I *Input) *Resp {
+func Dialer(fs afero.Fs, I *Input) *Resp {
 	usr, err := user.Current()
 	output := &Resp{}
 	keyfile := (usr.HomeDir + "/.ssh/id_rsa")
@@ -73,7 +71,7 @@ func Dialer(I *Input) *Resp {
 			defer sftp.Close()
 			switch {
 			case strings.Split(v, ",")[2] == "PUT":
-				originfile, err := os.Open(strings.Split(v, ",")[0])
+				originfile, err := fs.Open(strings.Split(v, ",")[0])
 				if err != nil {
 					fmt.Printf("Can't read origin file for sftp: %v\n", err)
 					break
@@ -97,7 +95,7 @@ func Dialer(I *Input) *Resp {
 					break
 				}
 				defer originfile.Close()
-				destinyfile, err := os.Create(strings.Split(v, ",")[1])
+				destinyfile, err := fs.Create(strings.Split(v, ",")[1])
 				if err != nil {
 					fmt.Printf("Can't create local file for sftp: %v\n", err)
 					break

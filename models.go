@@ -3,6 +3,13 @@ package main
 import (
 	"fmt"
 	"os"
+
+	"github.com/spf13/afero"
+)
+
+const (
+	msgexists  = "remgo.toml already exist."
+	msgcreated = "remgo.toml created."
 )
 
 // Tomlconfig struct to read toml file components.
@@ -69,7 +76,7 @@ func Banner() {
 }
 
 // CreateTemplate fucntion to create a base remgo.toml file
-func CreateTemplate() {
+func CreateTemplate(fs afero.Fs) (string, error) {
 	template := `title = "Example of remgo Configuration"
 logdir = "/tmp/logs"
 
@@ -101,23 +108,19 @@ command = "whoami; ip addr show"
 log = true
 `
 	tomlfile := "remgo.toml"
-	if _, err := os.Stat(tomlfile); err != nil {
+	if _, err := fs.Stat(tomlfile); err != nil {
 		if os.IsNotExist(err) {
-			file, err := os.Create(tomlfile)
+			file, err := fs.Create(tomlfile)
 			if err != nil {
-				fmt.Println("Error creating remgo.toml file", err)
-				os.Exit(1)
+				return "", err
 			}
 			defer file.Close()
 			if _, err := file.Write([]byte(template)); err != nil {
-				fmt.Printf("Can't write message\n%v\n", err)
-				os.Exit(1)
+				return "", err
 			}
 		}
 	} else {
-		fmt.Println("remgo.toml already exist.")
-		os.Exit(1)
+		return msgexists, nil
 	}
-	fmt.Println("remgo.toml created.")
-	os.Exit(0)
+	return msgcreated, nil
 }
